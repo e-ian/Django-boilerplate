@@ -1,7 +1,4 @@
 auth
-**/__pycache__/**
+Authentication/Authentication/__pycache__/
 user/__pycache__
 user/migrations/__pycache__/
-venv/
-__pycache__/
-/__pycache__/
