@@ -2,12 +2,13 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from django.contrib.auth.models import User
 from rest_framework.response import Response
+from .serializers import UserSerializer
 
 class RegisterUser(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
-        username = request.data.get("username", "")
-        password = request.data.get("password", "")
-        email = request.data.get("email", "")
+        username = request.data["username"]
+        password = request.data["password"]
+        email = request.data["email"]
 
         if not username  and not password and not email:
             return Response(
@@ -16,15 +17,13 @@ class RegisterUser(generics.CreateAPIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        new_user = User.objects.create_user(username=username, password=password, email=email)
+        serializer = UserSerializer(data = request.data)
+        
+        # new_user = User.objects.create_user(username=username, password=password, email=email)
+        if serializer.is_valid():
+            serializer.save()
         return Response(
-            data={
-                "Username": username,
-                "Password": password,
-                "email": email
-            },
-            status=status.HTTP_201_CREATED
-
+            serializer.data, status=status.HTTP_201_CREATED
         )
 
         
