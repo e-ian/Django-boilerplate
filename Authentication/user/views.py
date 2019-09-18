@@ -26,7 +26,7 @@ class RegisterUser(generics.CreateAPIView):
             )
         serializer = UserSerializer(data=request.data)
 
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response({"message": "User registered successfully", "data":serializer.data},
             status=status.HTTP_201_CREATED
@@ -36,10 +36,10 @@ class RegisterUser(generics.CreateAPIView):
 class LoginUser(GenericAPIView):
     permission_classes = (AllowAny,)
 
-    def post(self, request, format=None):
-        username = request.data.get("username")
-        password = request.data.get("password")
-        if username is None:
+    def post(self, request, *args, **kwargs):
+        username = request.data["username"]
+        password = request.data["password"]
+        if username is None or password is None:
             return Response(
                 {
                     'error': 'Please provide both username and password to login'},

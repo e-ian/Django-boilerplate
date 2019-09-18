@@ -89,7 +89,7 @@ DATABASES = {
         'HOST':'localhost',
         'NAME':'userauth',
         'USER':'postgres',
-        'PASSWORD':'postgres',
+        'PASSWORD':'Alimanu195apac',
         'PORT':'5432'
         #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
